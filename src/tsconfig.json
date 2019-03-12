@@ -1,0 +1,10 @@
+{
+	"compilerOptions": {
+		"target": "ES3",
+		"experimentalDecorators": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
+		"strictNullChecks": true,
+		"alwaysStrict": true
+	}
+}
