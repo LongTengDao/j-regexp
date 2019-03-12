@@ -7,7 +7,7 @@ require('@ltd/j-dev')(__dirname+'/..')(async ({ build, get, map }) => {
 		Name: '@ltd/j-regexp',
 		Desc: `
 			可读性更好的正则表达式创建方式。
-			More readable way for creating RegExp`,
+			More readable way for creating RegExp.`,
 		semver: await get('src/version'),
 		ES: 3,
 		ESM: true,
