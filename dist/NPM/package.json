@@ -1,7 +1,7 @@
 {
 	"name": "@ltd/j-regexp",
 	"description": "More readable way for creating RegExp.／可读性更好的正则表达式创建方式。",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"license": "LGPL-3.0",
 	"author": "龙腾道 <LongTengDao@LongTengDao.com> (www.LongTengDao.com)",
 	"bugs": "https://GitHub.com/LongTengDao/j-regexp/issues",

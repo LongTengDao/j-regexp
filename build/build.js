@@ -1,6 +1,6 @@
 'use strict';
 
-require('@ltd/j-dev')(__dirname+'/..')(async ({ build, get, map }) => {
+require('@ltd/j-dev')(__dirname+'/..')(async ({ build, get }) => {
 	
 	await build({
 		name: 'j-regexp',
@@ -20,7 +20,5 @@ require('@ltd/j-dev')(__dirname+'/..')(async ({ build, get, map }) => {
 			main_global: 'jRegExp',
 		},
 	});
-	
-	await map('src/d.ts', 'dist/TSD/j-regexp.d.ts');
 	
 });
