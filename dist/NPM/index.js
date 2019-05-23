@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var version = '1.2.0';
+var version = '2.0.0';
 
 var slice = Array.prototype.slice;
 
@@ -21,27 +21,13 @@ function NewRegExp(flags) {
         return RegExp(Source(template.raw, slice.call(arguments, 1)), flags);
     };
 }
-var g = /*#__PURE__*/ NewRegExp('g');
-var i = /*#__PURE__*/ NewRegExp('i');
-var m = /*#__PURE__*/ NewRegExp('m');
-var gi = /*#__PURE__*/ NewRegExp('gi');
-var gm = /*#__PURE__*/ NewRegExp('gm');
-var im = /*#__PURE__*/ NewRegExp('im');
-var gim = /*#__PURE__*/ NewRegExp('gim');
 var _export = (
 /*#__PURE__*/
 function () {
     var exports = {
         version: version,
         newRegExp: newRegExp,
-        NewRegExp: NewRegExp,
-        g: g,
-        i: i,
-        m: m,
-        gi: gi,
-        gm: gm,
-        im: im,
-        gim: gim
+        NewRegExp: NewRegExp
     };
     return exports['default'] = exports;
 }());

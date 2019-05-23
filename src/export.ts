@@ -26,41 +26,19 @@ export function NewRegExp (flags :string) :typeof newRegExp {
 	};
 }
 
-export var g = /*#__PURE__*/NewRegExp('g');
-export var i = /*#__PURE__*/NewRegExp('i');
-export var m = /*#__PURE__*/NewRegExp('m');
-export var gi = /*#__PURE__*/NewRegExp('gi');
-export var gm = /*#__PURE__*/NewRegExp('gm');
-export var im = /*#__PURE__*/NewRegExp('im');
-export var gim = /*#__PURE__*/NewRegExp('gim');
-
 export default (
 	/*#__PURE__*/
 	function () {
 		var exports :exports = {
 			version: version,
 			newRegExp: newRegExp,
-			NewRegExp: NewRegExp,
-			g: g,
-			i: i,
-			m: m,
-			gi: gi,
-			gm: gm,
-			im: im,
-			gim: gim
+			NewRegExp: NewRegExp
 		};
 		return exports['default'] = exports;
 		type exports = {
 			version :typeof version,
 			newRegExp :typeof newRegExp,
 			NewRegExp :typeof NewRegExp,
-			g: typeof g,
-			i: typeof i,
-			m: typeof m,
-			gi: typeof gi,
-			gm: typeof gm,
-			im: typeof im,
-			gim: typeof gim,
 			default? :exports,
 		};
 	}()

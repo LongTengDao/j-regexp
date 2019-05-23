@@ -1,15 +1,8 @@
 export = exports;
 declare const exports :{
-	version :'1.2.0'
-	newRegExp :typeof newRegExp
-	NewRegExp (flags :string) :typeof newRegExp
-	g :typeof newRegExp
-	i :typeof newRegExp
-	m :typeof newRegExp
-	gi :typeof newRegExp
-	gm :typeof newRegExp
-	im :typeof newRegExp
-	gim :typeof newRegExp
-	default: typeof exports
+	version :'2.0.0',
+	newRegExp :typeof newRegExp,
+	NewRegExp (flags :string) :typeof newRegExp,
+	default: typeof exports,
 };
 declare function newRegExp (template :TemplateStringsArray, ...substitutions :( string | RegExp )[]) :RegExp;
