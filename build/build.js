@@ -1,24 +1,35 @@
 'use strict';
 
-require('@ltd/j-dev')(__dirname+'/..')(async ({ build, get }) => {
+require('@ltd/j-dev')(__dirname+'/..')(async ({ build, 龙腾道, get, ful }) => {
+	
+	const zhs = '可读性更好的正则表达式创建方式。从属于“简计划”。';
+	const en = 'More readable way for creating RegExp. Belong to "Plan J".';
+	
+	const semver = await get('src/version');
+	
+	if ( parseInt(semver)-parseInt(await get('../../LongTengDao/j-groupify/src/version'))!==5-3 ) {
+		throw Error('版本号没有伴随依赖升级');
+	}
 	
 	await build({
 		name: 'j-regexp',
-		Name: '@ltd/j-regexp',
-		Desc: `
-			可读性更好的正则表达式创建方式。
-			More readable way for creating RegExp.`,
-		semver: await get('src/version'),
+		user: 'LongTengDao@ltd',
+		Desc: [ zhs, en ],
+		Auth: 龙腾道,
+		Copy: 'LGPL-3.0',
+		semver,
+		locate: {
+			'@ltd/j-groupify': ful('../../LongTengDao/j-groupify/dist/ESM/.j-groupify'),
+		},
 		ES: 3,
 		ESM: true,
 		NPM: {
-			meta_: {
-				description: 'More readable way for creating RegExp.／可读性更好的正则表达式创建方式。',
-			}
+			description: `${en}／${zhs}`,
 		},
 		UMD: {
-			main_global: 'jRegExp',
+			main_global: 'newRegExp',
 		},
+		LICENSE_: true,
 	});
 	
 });

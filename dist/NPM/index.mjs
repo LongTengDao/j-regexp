@@ -1,4 +1,13 @@
-﻿'use strict';
+﻿/*!
+ * 模块名称：j-regexp
+ * 模块功能：可读性更好的正则表达式创建方式。从属于“简计划”。
+   　　　　　More readable way for creating RegExp. Belong to "Plan J".
+ * 模块版本：5.2.0
+ * 许可条款：LGPL-3.0
+ * 所属作者：龙腾道 <LongTengDao@LongTengDao.com> (www.LongTengDao.com)
+ * 问题反馈：https://GitHub.com/LongTengDao/j-regexp/issues
+ * 项目主页：https://GitHub.com/LongTengDao/j-regexp/
+ */
 
 var version = '5.2.0';
 
@@ -204,6 +213,9 @@ var _export = Default(newRegExp, {
     groupify: groupify
 });
 
-module.exports = _export;
+export default _export;
+export { clearRegExp, groupify, newRegExp, version };
 
-//# sourceMappingURL=index.js.map
+/*¡ j-regexp */
+
+//# sourceMappingURL=index.mjs.map
