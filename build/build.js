@@ -7,7 +7,7 @@ require('@ltd/j-dev')(__dirname+'/..')(async ({ build, 龙腾道, get, ful }) =>
 	
 	const semver = await get('src/version');
 	
-	if ( parseInt(semver)-parseInt(await get('../../LongTengDao/j-groupify/src/version'))!==5-3 ) {
+	if ( parseInt(semver)-parseInt(await get('../../LongTengDao/j-groupify/src/version'))!==5.0-3.0 ) {
 		throw Error('版本号没有伴随依赖升级');
 	}
 	
@@ -23,12 +23,8 @@ require('@ltd/j-dev')(__dirname+'/..')(async ({ build, 龙腾道, get, ful }) =>
 		},
 		ES: 3,
 		ESM: true,
-		NPM: {
-			description: `${en}／${zhs}`,
-		},
-		UMD: {
-			main_global: 'newRegExp',
-		},
+		NPM: { description: `${en}／${zhs}` },
+		UMD: { main_global: 'newRegExp' },
 		LICENSE_: true,
 	});
 	

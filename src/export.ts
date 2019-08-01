@@ -5,7 +5,7 @@ import groupify from './groupify';
 
 export { version, newRegExp, clearRegExp, groupify };
 
-import Default from '.default';
+import Default from '.default?=';
 export default Default(newRegExp, {
 	version: version,
 	newRegExp: newRegExp,

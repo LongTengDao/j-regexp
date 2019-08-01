@@ -1,6 +1,6 @@
 export = exports;
 declare const exports :main & {
-	version :'5.2.0',
+	version :'5.3.0',
 	newRegExp :main,
 	clearRegExp () :undefined,
 	clearRegExp<T extends any> (value :T) :T,
