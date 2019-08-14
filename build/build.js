@@ -7,7 +7,7 @@ require('@ltd/j-dev')(__dirname+'/..')(async ({ build, 龙腾道, get, ful, map 
 	
 	const semver = await get('src/version');
 	
-	if ( parseInt(semver)-parseInt(await get('../../LongTengDao/j-groupify/src/version'))!==5.0-3.0 ) {
+	if ( parseInt(semver)-parseInt(await get('../../LongTengDao/j-groupify/src/version'))!==6.0-3.0 ) {
 		throw Error('版本号没有伴随依赖升级');
 	}
 	

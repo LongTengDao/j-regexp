@@ -3,7 +3,12 @@ import newRegExp from './newRegExp';
 import clearRegExp from './clearRegExp';
 import groupify from './groupify';
 
-export { version, newRegExp, clearRegExp, groupify };
+export {
+	version,
+	newRegExp,
+	clearRegExp,
+	groupify,
+};
 
 import Default from '.default?=';
 export default Default(newRegExp, {

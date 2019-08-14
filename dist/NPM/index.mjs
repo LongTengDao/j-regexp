@@ -2,14 +2,14 @@
  * 模块名称：j-regexp
  * 模块功能：可读性更好的正则表达式创建方式。从属于“简计划”。
    　　　　　More readable way for creating RegExp. Belong to "Plan J".
- * 模块版本：5.3.0
+ * 模块版本：6.0.0
  * 许可条款：LGPL-3.0
  * 所属作者：龙腾道 <LongTengDao@LongTengDao.com> (www.LongTengDao.com)
  * 问题反馈：https://GitHub.com/LongTengDao/j-regexp/issues
  * 项目主页：https://GitHub.com/LongTengDao/j-regexp/
  */
 
-var version = '5.3.0';
+var version = '6.0.0';
 
 var slice = Array.prototype.slice;
 
@@ -24,33 +24,25 @@ function Source (raw                       , substitutions                      
 	return source.replace(NT, '');
 }
 
-var newRegExp            =
-	/*#__PURE__*/
-	function (newRegExp, createNewRegExpWith) {
-		
-		( function recursion (pickedFlags            , restFlags       )       {
-			if ( restFlags ) {
-				recursion(pickedFlags+restFlags.charAt(0)         , restFlags = restFlags.slice(1)         );
-				recursion(pickedFlags, restFlags);
-			}
-			else if ( pickedFlags ) {
-				newRegExp[pickedFlags] = createNewRegExpWith(pickedFlags);
-			}
-		} )('', 'gimsuy');
-		
-		return newRegExp;
-		
-	}(
-		function newRegExp (template                      )         {
-			return new RegExp(Source(template.raw, slice.call(arguments, 1)));
-		}             ,
-		
-		function createNewRegExpWith (flags       ) {
-			return ( {}        )['newRegExp.'+flags] = function (template                      )         {
-				return new RegExp(Source(template.raw, slice.call(arguments, 1)), flags);
-			};
+                                                                                                     
+function newRegExp (flags_template                               )                     {
+	return typeof flags_template==='string'
+		? function newRegExp (template                      )         {
+			return new RegExp(
+				/*#__PURE__*/Source(
+					template.raw,
+					/*#__PURE__*/slice.call(arguments, 1)
+				),
+				flags_template
+			);
 		}
-	);
+		: new RegExp(
+			/*#__PURE__*/Source(
+				flags_template.raw,
+				/*#__PURE__*/slice.call(arguments, 1)
+			)
+		);
+}
 
 var clearRegExp = '$_' in RegExp
 	? function () {
