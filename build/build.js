@@ -19,7 +19,7 @@ require('@ltd/j-dev')(__dirname+'/..')(async ({ build, 龙腾道, get, ful }) =>
 		Copy: 'LGPL-3.0',
 		semver,
 		locate: {
-			'@ltd/j-groupify': ful('../../LongTengDao/j-groupify/dist/ESM/.j-groupify'),
+			'@ltd/j-groupify': ful('../../LongTengDao/j-groupify/dist/ESM/.j-groupify.js'),
 		},
 		ES: 3,
 		ESM: true,
