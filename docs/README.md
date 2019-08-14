@@ -16,26 +16,28 @@ const ATTRIBUTE_VALUE = newRegExp`
     )
 `;
 
+const _ = /[\t\n\f\r\x20]/;
+
 const ATTRIBUTE = newRegExp`
-    \s+
+    ${_}+
     ${ATTRIBUTE_NAME}
     (?:
-        \s*
+        ${_}*
         =
-        \s*
+        ${_}*
         ${ATTRIBUTE_VALUE}
     )?
 `;
 
 const START_TAG = newRegExp.i`
-    <${TAG_NAME}(?:${ATTRIBUTE})*\s*>
+    <${TAG_NAME}(?:${ATTRIBUTE})*${_}*>
 `;
 
 const END_TAG = newRegExp.i`
-    </${TAG_NAME}\s*>
+    </${TAG_NAME}${_}*>
 `;
 
 const SELF_CLOSING_TAG = newRegExp.i`
-    <${TAG_NAME}(?:${ATTRIBUTE})*\s+/>
+    <${TAG_NAME}(?:${ATTRIBUTE})*${_}+/>
 `;
 ```
