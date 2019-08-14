@@ -1,6 +1,6 @@
 'use strict';
 
-require('@ltd/j-dev')(__dirname+'/..')(async ({ build, 龙腾道, get, ful }) => {
+require('@ltd/j-dev')(__dirname+'/..')(async ({ build, 龙腾道, get, ful, map }) => {
 	
 	const zhs = '可读性更好的正则表达式创建方式。从属于“简计划”。';
 	const en = 'More readable way for creating RegExp. Belong to "Plan J".';
@@ -27,5 +27,7 @@ require('@ltd/j-dev')(__dirname+'/..')(async ({ build, 龙腾道, get, ful }) =>
 		UMD: { main_global: 'newRegExp' },
 		LICENSE_: true,
 	});
+	
+	await map('docs/README.md', 'dist/NPM/README.md');
 	
 });
