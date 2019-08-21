@@ -1,8 +1,7 @@
-export const version :'6.0.0';
+export const version :'6.1.0';
 
-type newRegExp = (template :TemplateStringsArray, ...substitutions :( RegExp | string )[]) => RegExp;
-type NewRegExp = (flags :string) => newRegExp;
-export const newRegExp :newRegExp & NewRegExp;
+export function newRegExp (template :TemplateStringsArray, ...substitutions :( RegExp | string )[]) :RegExp;
+export function newRegExp (flags :string) :(template :TemplateStringsArray, ...substitutions :( RegExp | string )[]) => RegExp;
 
 export function clearRegExp () :undefined;
 export function clearRegExp<T extends any> (value :T) :T;

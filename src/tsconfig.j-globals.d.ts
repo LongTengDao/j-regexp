@@ -1,12 +1,11 @@
 
 declare module '.Array.prototype.slice' { export default Array.prototype.slice; }
 
-declare module '.Object.assign' { export default Object.assign; }
-declare module '.Object.create?=' { export default Object.create; }
-declare module '.Object.defineProperty' { export default Object.defineProperty; }
-declare module '.Object.freeze' { export default Object.freeze; }
+declare module '.Object.create?=' { export default create;
+	function create (proto :null) :object;
+	function create<P extends object> (proto :P) :object & { [K in keyof P] :P[K] };
+}
 declare module '.Object.prototype.hasOwnProperty' { export default Object.prototype.hasOwnProperty; }
-declare module '.Object.seal' { export default Object.seal; }
 
 declare module '.RegExp' { export default RegExp; }
 
@@ -17,8 +16,8 @@ declare module '.default?=' { export default Default;
 	function Default<Statics extends Readonly<{ [key :string] :any, default? :ModuleFunction<Statics, Main> }>, Main extends Callable | Newable | Callable & Newable> (main :Main, statics :Statics) :ModuleFunction<Statics, Main>;
 	type Module<Exports> = Readonly<Exports & { default :Module<Exports> }>;
 	type ModuleFunction<Statics, Main> = Readonly<Statics & { default :ModuleFunction<Statics, Main> }> & Main;
-	type Callable = (...args :any[]) => any;
-	type Newable = { new (...args :any[]) :any };
+	type Callable = (...args :any) => any;
+	type Newable = { new (...args :any) :any };
 }
 
 declare module '.undefined' { export default undefined; }

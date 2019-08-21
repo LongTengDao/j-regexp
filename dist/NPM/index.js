@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var version = '6.0.0';
+var version = '6.1.0';
 
 var slice = Array.prototype.slice;
 
@@ -98,18 +98,14 @@ var create = Object.create || (
 	/*¡ j-globals: Object.create (polyfill) */
 );
 
-var assign = Object.assign;
-
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 var toStringTag = typeof Symbol!=='undefined' ? Symbol.toStringTag : undefined;
 
+var assign = Object.assign;
 var defineProperty = Object.defineProperty;
-
 var freeze = Object.freeze;
-
 var seal = Object.seal;
-
 var Default = (
 	/*! j-globals: default (internal) */
 	function Default (exports, addOnOrigin) {

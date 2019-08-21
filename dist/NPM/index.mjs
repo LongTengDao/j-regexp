@@ -2,14 +2,14 @@
  * 模块名称：j-regexp
  * 模块功能：可读性更好的正则表达式创建方式。从属于“简计划”。
    　　　　　More readable way for creating RegExp. Belong to "Plan J".
- * 模块版本：6.0.0
+ * 模块版本：6.1.0
  * 许可条款：LGPL-3.0
  * 所属作者：龙腾道 <LongTengDao@LongTengDao.com> (www.LongTengDao.com)
  * 问题反馈：https://GitHub.com/LongTengDao/j-regexp/issues
  * 项目主页：https://GitHub.com/LongTengDao/j-regexp/
  */
 
-var version = '6.0.0';
+var version = '6.1.0';
 
 var slice = Array.prototype.slice;
 
@@ -107,18 +107,14 @@ var create = Object.create || (
 	/*¡ j-globals: Object.create (polyfill) */
 );
 
-var assign = Object.assign;
-
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 var toStringTag = typeof Symbol!=='undefined' ? Symbol.toStringTag : undefined;
 
+var assign = Object.assign;
 var defineProperty = Object.defineProperty;
-
 var freeze = Object.freeze;
-
 var seal = Object.seal;
-
 var Default = (
 	/*! j-globals: default (internal) */
 	function Default (exports, addOnOrigin) {

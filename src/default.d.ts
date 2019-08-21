@@ -1,10 +1,10 @@
 export = exports;
 
-declare const exports :NewRegExp & newRegExp & Readonly<{
+declare const exports :typeof newRegExp & Readonly<{
 	
 	version :string,
 	
-	newRegExp :NewRegExp & newRegExp,
+	newRegExp :typeof newRegExp,
 	
 	clearRegExp () :undefined,
 	clearRegExp<T extends any> (value :T) :T,
@@ -15,5 +15,5 @@ declare const exports :NewRegExp & newRegExp & Readonly<{
 	
 }>;
 
-type NewRegExp = (flags :string) => newRegExp;
-type newRegExp = (template :TemplateStringsArray, ...substitutions :( RegExp | string )[]) => RegExp;
+declare function newRegExp (flags :string) :(template :TemplateStringsArray, ...substitutions :( RegExp | string )[]) => RegExp;
+declare function newRegExp (template :TemplateStringsArray, ...substitutions :( RegExp | string )[]) :RegExp;
