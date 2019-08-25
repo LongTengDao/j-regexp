@@ -1,4 +1,4 @@
-export const version :'6.1.0';
+export const version :'6.2.0';
 
 export function newRegExp (template :TemplateStringsArray, ...substitutions :( RegExp | string )[]) :RegExp;
 export function newRegExp (flags :string) :(template :TemplateStringsArray, ...substitutions :( RegExp | string )[]) => RegExp;

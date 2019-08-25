@@ -2,8 +2,7 @@
 declare module '.Array.prototype.slice' { export default Array.prototype.slice; }
 
 declare module '.Object.create?=' { export default create;
-	function create (proto :null) :object;
-	function create<P extends object> (proto :P) :object & { [K in keyof P] :P[K] };
+	function create<P extends object | null> (proto :P) :P extends object ? object & { [K in keyof P] :P[K] } : object;
 }
 declare module '.Object.prototype.hasOwnProperty' { export default Object.prototype.hasOwnProperty; }
 
@@ -18,6 +17,10 @@ declare module '.default?=' { export default Default;
 	type ModuleFunction<Statics, Main> = Readonly<Statics & { default :ModuleFunction<Statics, Main> }> & Main;
 	type Callable = (...args :any) => any;
 	type Newable = { new (...args :any) :any };
+}
+
+declare module '.null.prototype' { export default NULL;
+	const NULL :object | null;
 }
 
 declare module '.undefined' { export default undefined; }

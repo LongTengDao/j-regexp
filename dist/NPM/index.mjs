@@ -2,14 +2,14 @@
  * 模块名称：j-regexp
  * 模块功能：可读性更好的正则表达式创建方式。从属于“简计划”。
    　　　　　More readable way for creating RegExp. Belong to "Plan J".
- * 模块版本：6.1.0
+ * 模块版本：6.2.0
  * 许可条款：LGPL-3.0
  * 所属作者：龙腾道 <LongTengDao@LongTengDao.com> (www.LongTengDao.com)
  * 问题反馈：https://GitHub.com/LongTengDao/j-regexp/issues
  * 项目主页：https://GitHub.com/LongTengDao/j-regexp/
  */
 
-var version = '6.1.0';
+var version = '6.2.0';
 
 var slice = Array.prototype.slice;
 
@@ -107,6 +107,14 @@ var create = Object.create || (
 	/*¡ j-globals: Object.create (polyfill) */
 );
 
+var NULL = (
+	/*! j-globals: null.prototype (internal) */
+	Object.create
+		? /*#__PURE__*/ Object.preventExtensions(Object.create(null))
+		: null
+	/*¡ j-globals: null.prototype (internal) */
+);
+
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 var toStringTag = typeof Symbol!=='undefined' ? Symbol.toStringTag : undefined;
@@ -148,7 +156,7 @@ var Default = (
  * 模块名称：j-groupify
  * 模块功能：将一个字符串数组，转化为分支式优化后的正则表达式匹配组。从属于“简计划”。
    　　　　　Transform a string array into a branch-style optimized regExp group. Belong to "Plan J".
- * 模块版本：3.5.0
+ * 模块版本：3.6.0
  * 许可条款：LGPL-3.0
  * 所属作者：龙腾道 <LongTengDao@LongTengDao.com> (www.LongTengDao.com)
  * 问题反馈：https://GitHub.com/LongTengDao/j-groupify/issues
@@ -157,26 +165,26 @@ var Default = (
 
 var NEED_TO_ESCAPE_IN_REGEXP = /^[$()*+\-.?[\\\]^{|]/;
 var SURROGATE_PAIR = /^[\uD800-\uDBFF][\uDC00-\uDFFF]/;
-var GROUP        = create(null);
+var GROUP = create(NULL)         ;
 
 function groupify (branches          , uFlag          , noEscape          )         {
-	var group        = create(null);
+	var group = create(NULL)         ;
 	var appendBranch = uFlag ? appendPointBranch : appendCodeBranch;
 	for ( var length         = branches.length, index         = 0; index<length; ++index ) { appendBranch(group, branches[index]); }
 	return sourcify(group, !noEscape);
 }
 function appendPointBranch (group       , branch        )       {
 	if ( branch ) {
-		var char         = SURROGATE_PAIR.test(branch) ? branch.slice(0, 2) : branch.charAt(0);
-		appendPointBranch(group[char] || ( group[char] = create(null) ), branch.slice(char.length));
+		var character         = SURROGATE_PAIR.test(branch) ? branch.slice(0, 2) : branch.charAt(0);
+		appendPointBranch(group[character] || ( group[character] = create(NULL)          ), branch.slice(character.length));
 	}
 	else { group[''] = GROUP; }
 }
 
 function appendCodeBranch (group       , branch        )       {
 	if ( branch ) {
-		var char         = branch.charAt(0);
-		appendCodeBranch(group[char] || ( group[char] = create(null) ), branch.slice(1));
+		var character         = branch.charAt(0);
+		appendCodeBranch(group[character] || ( group[character] = create(NULL)          ), branch.slice(1));
 	}
 	else { group[''] = GROUP; }
 }
@@ -185,11 +193,11 @@ function sourcify (group       , needEscape         )         {
 	var branches           = [];
 	var singleCharactersBranch           = [];
 	var noEmptyBranch          = true;
-	for ( var char in group ) {
-		if ( char ) {
-			var sub_branches         = sourcify(group[char], needEscape);
-			if ( needEscape && NEED_TO_ESCAPE_IN_REGEXP.test(char) ) { char = '\\'+char; }
-			sub_branches ? branches.push(char+sub_branches) : singleCharactersBranch.push(char);
+	for ( var character in group ) {
+		if ( character ) {
+			var sub_branches         = sourcify(group[character], needEscape);
+			if ( needEscape && NEED_TO_ESCAPE_IN_REGEXP.test(character) ) { character = '\\'+character; }
+			sub_branches ? branches.push(character+sub_branches) : singleCharactersBranch.push(character);
 		}
 		else { noEmptyBranch = false; }
 	}

@@ -2,7 +2,7 @@ export = exports;
 
 declare const exports :typeof newRegExp & Readonly<{
 	
-	version :'6.1.0',
+	version :'6.2.0',
 	
 	newRegExp :typeof newRegExp,
 	
