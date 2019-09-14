@@ -1,6 +1,4 @@
 
-declare module '.Array.prototype.slice' { export default Array.prototype.slice; }
-
 declare module '.Object.create?=' { export default create;
 	function create<P extends object | null> (proto :P) :P extends object ? object & { [K in keyof P] :P[K] } : object;
 }

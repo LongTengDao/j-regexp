@@ -1,33 +1,32 @@
 import RegExp from '.RegExp';
-import slice from '.Array.prototype.slice';
 
 var NT = /[\n\t]/g;
+var SEARCH_ESCAPE = /\\./g;
+function graveAccentReplacer ($$ :string) { return $$==='\\`' ? '`' : $$; }
+var flags :string;
+var u :boolean;
 
-function Source (raw :ReadonlyArray<string>, substitutions :( RegExp | string )[]) :string {
-	var source :string = raw[0];
-	for ( var length :number = substitutions.length, index :number = 0; index<length; ) {
-		var substitution :RegExp | string = substitutions[index];
-		source += ( substitution instanceof RegExp ? substitution.source : substitution )+raw[++index];
+function RE (template :TemplateStringsArray) {
+	var raw = template.raw;
+	var source = raw[0];
+	for ( var length = arguments.length, index = 1; index<length; ++index ) {
+		var values = arguments[index];
+		source += ( values instanceof RegExp ? values.source : values )+raw[index];
 	}
-	return source.replace(NT, '');
+	if ( u ) { source = source.replace(SEARCH_ESCAPE, graveAccentReplacer); }
+	return RegExp(source.replace(NT, ''), flags);
 }
 
-type newRegExp = (template :TemplateStringsArray, ...substitutions :( RegExp | string )[]) => RegExp;
-export default function newRegExp (flags_template :string | TemplateStringsArray) :newRegExp | RegExp {
-	return typeof flags_template==='string'
-		? function newRegExp (template :TemplateStringsArray) :RegExp {
-			return new RegExp(
-				/*#__PURE__*/Source(
-					template.raw,
-					/*#__PURE__*/slice.call(arguments, 1)
-				),
-				flags_template
-			);
-		}
-		: new RegExp(
-			/*#__PURE__*/Source(
-				flags_template.raw,
-				/*#__PURE__*/slice.call(arguments, 1)
-			)
-		);
+export default function newRegExp (template_flags :TemplateStringsArray | string) :RegExp | ( (template :TemplateStringsArray) => RegExp ) {
+	if ( typeof template_flags==='object' ) {
+		flags = '';
+		u = false;
+		return /*#__PURE__*/ RE.apply(null, arguments as any);
+	}
+	var U = /*#__PURE__*/ template_flags.indexOf('u')>=0;
+	return function newRegExp (template :TemplateStringsArray) :RegExp {
+		flags = template_flags;
+		u = U;
+		return /*#__PURE__*/ RE.apply(null, arguments as any);
+	};
 };

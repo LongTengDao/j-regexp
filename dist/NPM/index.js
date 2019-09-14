@@ -1,38 +1,36 @@
 ﻿'use strict';
 
-var version = '6.2.0';
-
-var slice = Array.prototype.slice;
+var version = '6.2.1';
 
 var NT = /[\n\t]/g;
+var SEARCH_ESCAPE = /\\./g;
+function graveAccentReplacer ($$        ) { return $$==='\\`' ? '`' : $$; }
+var flags        ;
+var u         ;
 
-function Source (raw                       , substitutions                       )         {
-	var source         = raw[0];
-	for ( var length         = substitutions.length, index         = 0; index<length; ) {
-		var substitution                  = substitutions[index];
-		source += ( substitution instanceof RegExp ? substitution.source : substitution )+raw[++index];
+function RE (template                      ) {
+	var raw = template.raw;
+	var source = raw[0];
+	for ( var length = arguments.length, index = 1; index<length; ++index ) {
+		var values = arguments[index];
+		source += ( values instanceof RegExp ? values.source : values )+raw[index];
 	}
-	return source.replace(NT, '');
+	if ( u ) { source = source.replace(SEARCH_ESCAPE, graveAccentReplacer); }
+	return RegExp(source.replace(NT, ''), flags);
 }
 
-                                                                                                     
-function newRegExp (flags_template                               )                     {
-	return typeof flags_template==='string'
-		? function newRegExp (template                      )         {
-			return new RegExp(
-				/*#__PURE__*/Source(
-					template.raw,
-					/*#__PURE__*/slice.call(arguments, 1)
-				),
-				flags_template
-			);
-		}
-		: new RegExp(
-			/*#__PURE__*/Source(
-				flags_template.raw,
-				/*#__PURE__*/slice.call(arguments, 1)
-			)
-		);
+function newRegExp (template_flags                               )                                                          {
+	if ( typeof template_flags==='object' ) {
+		flags = '';
+		u = false;
+		return /*#__PURE__*/ RE.apply(null, arguments       );
+	}
+	var U = /*#__PURE__*/ template_flags.indexOf('u')>=0;
+	return function newRegExp (template                      )         {
+		flags = template_flags;
+		u = U;
+		return /*#__PURE__*/ RE.apply(null, arguments       );
+	};
 }
 
 var clearRegExp = '$_' in RegExp
