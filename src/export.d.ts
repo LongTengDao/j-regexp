@@ -6,7 +6,7 @@ export function newRegExp (flags :string) :(template :TemplateStringsArray, ...s
 export function clearRegExp () :undefined;
 export function clearRegExp<T extends any> (value :T) :T;
 
-export function groupify (branches :string[], uFlag? :boolean, noEscape? :boolean) :string;
+export function groupify (branches :readonly string[], uFlag? :boolean, noEscape? :boolean) :string;
 
 export default exports;
 declare const exports :typeof newRegExp & Readonly<{

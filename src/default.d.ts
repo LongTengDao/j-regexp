@@ -9,7 +9,7 @@ declare const exports :typeof newRegExp & Readonly<{
 	clearRegExp () :undefined,
 	clearRegExp<T extends any> (value :T) :T,
 	
-	groupify (branches :string[], uFlag? :boolean, noEscape? :boolean) :string,
+	groupify (branches :readonly string[], uFlag? :boolean, noEscape? :boolean) :string,
 	
 	default :typeof exports,
 	

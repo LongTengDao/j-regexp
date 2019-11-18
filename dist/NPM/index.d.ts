@@ -2,14 +2,14 @@ export = exports;
 
 declare const exports :typeof newRegExp & Readonly<{
 	
-	version :'6.2.1',
+	version :'6.3.0',
 	
 	newRegExp :typeof newRegExp,
 	
 	clearRegExp () :undefined,
 	clearRegExp<T extends any> (value :T) :T,
 	
-	groupify (branches :string[], uFlag? :boolean, noEscape? :boolean) :string,
+	groupify (branches :readonly string[], uFlag? :boolean, noEscape? :boolean) :string,
 	
 	default :typeof exports,
 	

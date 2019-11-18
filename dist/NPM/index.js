@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var version = '6.2.1';
+var version = '6.3.0';
 
 var NT = /[\n\t]/g;
 var SEARCH_ESCAPE = /\\./g;
@@ -145,7 +145,7 @@ var Default = (
  * 模块名称：j-groupify
  * 模块功能：将一个字符串数组，转化为分支式优化后的正则表达式匹配组。从属于“简计划”。
    　　　　　Transform a string array into a branch-style optimized regExp group. Belong to "Plan J".
- * 模块版本：3.6.0
+ * 模块版本：3.7.0
  * 许可条款：LGPL-3.0
  * 所属作者：龙腾道 <LongTengDao@LongTengDao.com> (www.LongTengDao.com)
  * 问题反馈：https://GitHub.com/LongTengDao/j-groupify/issues
@@ -156,7 +156,7 @@ var NEED_TO_ESCAPE_IN_REGEXP = /^[$()*+\-.?[\\\]^{|]/;
 var SURROGATE_PAIR = /^[\uD800-\uDBFF][\uDC00-\uDFFF]/;
 var GROUP = create(NULL)         ;
 
-function groupify (branches          , uFlag          , noEscape          )         {
+function groupify (branches                   , uFlag          , noEscape          )         {
 	var group = create(NULL)         ;
 	var appendBranch = uFlag ? appendPointBranch : appendCodeBranch;
 	for ( var length         = branches.length, index         = 0; index<length; ++index ) { appendBranch(group, branches[index]); }
