@@ -1,49 +1,26 @@
 ﻿'use strict';
 
-var version = '6.3.0';
+var version = '7.0.0';
 
-var NT = /[\n\t]/g;
-var SEARCH_ESCAPE = /\\./g;
-function graveAccentReplacer ($$        ) { return $$==='\\`' ? '`' : $$; }
-var flags        ;
-var u         ;
+var toString = Object.prototype.toString;
 
-function RE (template                      ) {
-	var raw = template.raw;
-	var source = raw[0];
-	for ( var length = arguments.length, index = 1; index<length; ++index ) {
-		var values = arguments[index];
-		source += ( values instanceof RegExp ? values.source : values )+raw[index];
+var isArray = (
+	/*! j-globals: Array.isArray (polyfill) */
+	Array.isArray || function isArray (value) {
+		return /*#__PURE__*/ toString.call(value)==='[object Array]';
 	}
-	if ( u ) { source = source.replace(SEARCH_ESCAPE, graveAccentReplacer); }
-	return RegExp(source.replace(NT, ''), flags);
-}
+	/*¡ j-globals: Array.isArray (polyfill) */
+);
 
-function newRegExp (template_flags                               )                                                          {
-	if ( typeof template_flags==='object' ) {
-		flags = '';
-		u = false;
-		return /*#__PURE__*/ RE.apply(null, arguments       );
+var Function_prototype_apply = Function.prototype.apply;
+
+var apply = typeof Reflect==='object' ? Reflect.apply : (
+	/*! j-globals: Reflect.apply (polyfill) */
+	function apply (target, thisArg, args) {
+		return Function_prototype_apply.call(target, thisArg, args);
 	}
-	var U = /*#__PURE__*/ template_flags.indexOf('u')>=0;
-	return function newRegExp (template                      )         {
-		flags = template_flags;
-		u = U;
-		return /*#__PURE__*/ RE.apply(null, arguments       );
-	};
-}
-
-var clearRegExp = '$_' in RegExp
-	? function () {
-		var REGEXP = /^/;
-		return function clearRegExp                (value    )                {
-			REGEXP.test('');
-			return value;
-		};
-	}()
-	: function clearRegExp                (value    )                {
-		return value;
-	};
+	/*¡ j-globals: Reflect.apply (polyfill) */
+);
 
 var undefined$1 = void 0;
 
@@ -104,54 +81,6 @@ var NULL = (
 	/*¡ j-globals: null.prototype (internal) */
 );
 
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-var toStringTag = typeof Symbol!=='undefined' ? Symbol.toStringTag : undefined;
-
-var assign = Object.assign;
-var defineProperty = Object.defineProperty;
-var freeze = Object.freeze;
-var seal = Object.seal;
-var Default = (
-	/*! j-globals: default (internal) */
-	function Default (exports, addOnOrigin) {
-		return /*#__PURE__*/ function Module (exports, addOnOrigin) {
-			if ( !addOnOrigin ) { addOnOrigin = exports; exports = create(null); }
-			if ( assign ) { assign(exports, addOnOrigin); }
-			else {
-				for ( var key in addOnOrigin ) { if ( hasOwnProperty.call(addOnOrigin, key) ) { exports[key] = addOnOrigin[key]; } }
-				if ( !{ 'toString': null }.propertyIsEnumerable('toString') ) {
-					var keys = [ 'constructor', 'propertyIsEnumerable', 'isPrototypeOf', 'hasOwnProperty', 'valueOf', 'toLocaleString', 'toString' ];
-					while ( key = keys.pop() ) { if ( hasOwnProperty.call(addOnOrigin, key) ) { exports[key] = addOnOrigin[key]; } }
-				}
-			}
-			exports['default'] = exports;
-			if ( seal ) {
-				typeof exports==='function' && exports.prototype && seal(exports.prototype);
-				if ( toStringTag ) {
-					var descriptor = create(null);
-					descriptor.value = 'Module';
-					defineProperty(exports, toStringTag, descriptor);
-				}
-				freeze(exports);
-			}
-			return exports;
-		}(exports, addOnOrigin);
-	}
-	/*¡ j-globals: default (internal) */
-);
-
-/*!
- * 模块名称：j-groupify
- * 模块功能：将一个字符串数组，转化为分支式优化后的正则表达式匹配组。从属于“简计划”。
-   　　　　　Transform a string array into a branch-style optimized regExp group. Belong to "Plan J".
- * 模块版本：3.7.0
- * 许可条款：LGPL-3.0
- * 所属作者：龙腾道 <LongTengDao@LongTengDao.com> (www.LongTengDao.com)
- * 问题反馈：https://GitHub.com/LongTengDao/j-groupify/issues
- * 项目主页：https://GitHub.com/LongTengDao/j-groupify/
- */
-
 var NEED_TO_ESCAPE_IN_REGEXP = /^[$()*+\-.?[\\\]^{|]/;
 var SURROGATE_PAIR = /^[\uD800-\uDBFF][\uDC00-\uDFFF]/;
 var GROUP = create(NULL)         ;
@@ -200,9 +129,87 @@ function sourcify (group       , needEscape         )         {
 		+( noEmptyBranch ? '' : '?' );
 }
 
-/*¡ j-groupify */
+var NT = /[\n\t]/g;
+var SEARCH_ESCAPE = /\\./g;
+function graveAccentReplacer ($$        ) { return $$==='\\`' ? '`' : $$; }
+var flags        ;
+var u         ;
 
-var _export = Default(newRegExp, {
+function RE (template                      ) {
+	var raw = template.raw;
+	var source = raw[0];
+	for ( var length = arguments.length, index = 1; index<length; ++index ) {
+		var value = arguments[index];
+		source += ( isArray(value) ? groupify(value, u) : value instanceof RegExp ? value.source : value )+raw[index];
+	}
+	if ( u ) { source = source.replace(SEARCH_ESCAPE, graveAccentReplacer); }
+	return RegExp(source.replace(NT, ''), flags);
+}
+
+function newRegExp (template_flags                               )                                                          {
+	if ( typeof template_flags==='object' ) {
+		flags = '';
+		u = false;
+		return /*#__PURE__*/ apply(RE, null, arguments       );
+	}
+	var U = /*#__PURE__*/ template_flags.indexOf('u')>=0;
+	return function newRegExp (template                      )         {
+		flags = template_flags;
+		u = U;
+		return /*#__PURE__*/ apply(RE, null, arguments       );
+	};
+}
+
+var clearRegExp = '$_' in RegExp
+	? function () {
+		var REGEXP = /^/;
+		return function clearRegExp                (value    )                {
+			REGEXP.test('');
+			return value;
+		};
+	}()
+	: function clearRegExp                (value    )                {
+		return value;
+	};
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+var toStringTag = typeof Symbol!=='undefined' ? Symbol.toStringTag : undefined;
+
+var assign = Object.assign;
+var defineProperty = Object.defineProperty;
+var freeze = Object.freeze;
+var seal = Object.seal;
+var Default = (
+	/*! j-globals: default (internal) */
+	function Default (exports, addOnOrigin) {
+		return /*#__PURE__*/ function Module (exports, addOnOrigin) {
+			if ( !addOnOrigin ) { addOnOrigin = exports; exports = create(null); }
+			if ( assign ) { assign(exports, addOnOrigin); }
+			else {
+				for ( var key in addOnOrigin ) { if ( hasOwnProperty.call(addOnOrigin, key) ) { exports[key] = addOnOrigin[key]; } }
+				if ( !{ 'toString': null }.propertyIsEnumerable('toString') ) {
+					var keys = [ 'constructor', 'propertyIsEnumerable', 'isPrototypeOf', 'hasOwnProperty', 'valueOf', 'toLocaleString', 'toString' ];
+					while ( key = keys.pop() ) { if ( hasOwnProperty.call(addOnOrigin, key) ) { exports[key] = addOnOrigin[key]; } }
+				}
+			}
+			exports['default'] = exports;
+			if ( seal ) {
+				typeof exports==='function' && exports.prototype && seal(exports.prototype);
+				if ( toStringTag ) {
+					var descriptor = create(null);
+					descriptor.value = 'Module';
+					defineProperty(exports, toStringTag, descriptor);
+				}
+				freeze(exports);
+			}
+			return exports;
+		}(exports, addOnOrigin);
+	}
+	/*¡ j-globals: default (internal) */
+);
+
+var _export = Default({
 	version: version,
 	newRegExp: newRegExp,
 	clearRegExp: clearRegExp,

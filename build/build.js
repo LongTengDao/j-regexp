@@ -1,15 +1,11 @@
 'use strict';
 
-require('@ltd/j-dev')(__dirname+'/..')(async ({ build, 龙腾道, get, ful, map }) => {
+require('../test/test.js')(async ({ build, 龙腾道, get, map }) => {
 	
 	const zhs = '可读性更好的正则表达式创建方式。从属于“简计划”。';
 	const en = 'More readable way for creating RegExp. Belong to "Plan J".';
 	
 	const semver = await get('src/version');
-	
-	if ( parseInt(semver)-parseInt(await get('../../LongTengDao/j-groupify/src/version'))!==6.0-3.0 ) {
-		throw Error('版本号没有伴随依赖升级');
-	}
 	
 	await build({
 		name: 'j-regexp',
@@ -18,16 +14,13 @@ require('@ltd/j-dev')(__dirname+'/..')(async ({ build, 龙腾道, get, ful, map 
 		Auth: 龙腾道,
 		Copy: 'LGPL-3.0',
 		semver,
-		locate: {
-			'@ltd/j-groupify': ful('../../LongTengDao/j-groupify/dist/ESM/.j-groupify.js'),
-		},
 		ES: 3,
 		ESM: true,
 		NPM: { description: `${en}／${zhs}` },
-		UMD: { main_global: 'newRegExp' },
+		UMD: { main_global: 'jRegExp' },
 		LICENSE_: true,
 	});
 	
-	await map('docs/README.md', 'dist/NPM/README.md');
+	await map('docs/README.md', string => string.replace(/(\n```+)[^`\r\n]+/g, '$1'), 'dist/NPM/README.md');
 	
 });

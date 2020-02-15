@@ -11,7 +11,7 @@ export {
 };
 
 import Default from '.default?=';
-export default Default(newRegExp, {
+export default Default({
 	version: version,
 	newRegExp: newRegExp,
 	clearRegExp: clearRegExp,

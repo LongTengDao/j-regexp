@@ -1,8 +1,19 @@
 
+declare module '.Array.isArray?=' { export default isArray;
+	function isArray (value :any) :value is readonly any[];
+}
+
+declare module '.Function.prototype.apply' { export default Function.prototype.apply; }
+
 declare module '.Object.create?=' { export default create;
 	function create<P extends object | null> (proto :P) :P extends object ? object & { [K in keyof P] :P[K] } : object;
 }
 declare module '.Object.prototype.hasOwnProperty' { export default Object.prototype.hasOwnProperty; }
+declare module '.Object.prototype.toString' { export default Object.prototype.toString; }
+
+declare module '.Reflect.apply?=' { export default apply;
+	function apply<This extends any, Args extends { length :number, [index :number] :any }, Target extends (this :This, ...args :Args & any[]) => any> (target :Target, thisArg :This, args :Readonly<Args>) :Target extends (this :This, ...args :Args & any[]) => infer R ? R : never;
+}
 
 declare module '.RegExp' { export default RegExp; }
 
