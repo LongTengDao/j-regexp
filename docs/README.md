@@ -2,11 +2,11 @@
 ```js
 const { newRegExp } = require('@ltd/j-regexp');
 
-const TAG_NAME = /[a-z][a-z\d]*/;
+const TAG_NAME = /[a-z][a-z\d]*/i;
 
-const ATTRIBUTE_NAME = /[a-z][a-z\-]*/;
+const ATTRIBUTE_NAME = /[a-z][a-z\-]*/i;
 
-const ATTRIBUTE_VALUE = newRegExp`
+const ATTRIBUTE_VALUE = newRegExp.i`
 	(?:
 		"[^"]*"
 		|
@@ -16,9 +16,9 @@ const ATTRIBUTE_VALUE = newRegExp`
 	)
 `;
 
-const _ = /[\t\n\f\r\x20]/;
+const _ = /[\t\n\f\r\x20]/i;
 
-const ATTRIBUTE = newRegExp`
+const ATTRIBUTE = newRegExp.i`
 	${_}+
 	${ATTRIBUTE_NAME}
 	(?:
@@ -29,15 +29,15 @@ const ATTRIBUTE = newRegExp`
 	)?
 `;
 
-const START_TAG = newRegExp('i')`
+const START_TAG = newRegExp.i`
 	<${TAG_NAME}(?:${ATTRIBUTE})*${_}*>
 `;
 
-const END_TAG = newRegExp('i')`
+const END_TAG = newRegExp.i`
 	</${TAG_NAME}${_}*>
 `;
 
-const SELF_CLOSING_TAG = newRegExp('i')`
+const SELF_CLOSING_TAG = newRegExp.i`
 	<${TAG_NAME}(?:${ATTRIBUTE})*${_}+/>
 `;
 ```

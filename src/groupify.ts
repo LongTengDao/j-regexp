@@ -3,12 +3,12 @@ import NULL from '.null.prototype';
 
 var NEED_TO_ESCAPE_IN_REGEXP = /^[$()*+\-.?[\\\]^{|]/;
 var SURROGATE_PAIR = /^[\uD800-\uDBFF][\uDC00-\uDFFF]/;
-var GROUP = create(NULL) as Group;
+var GROUP = /*#__PURE__*/create(NULL) as Group;
 
-export default function groupify (branches :readonly string[], uFlag? :boolean, noEscape? :boolean) :string {
+export default function groupify (branches :ArrayLike<string>, uFlag? :boolean, noEscape? :boolean) :string {
 	var group = create(NULL) as Group;
 	var appendBranch = uFlag ? appendPointBranch : appendCodeBranch;
-	for ( var length :number = branches.length, index :number = 0; index<length; ++index ) { appendBranch(group, branches[index]); }
+	for ( var length :number = branches.length, index :number = 0; index<length; ++index ) { appendBranch(group, branches[index]!); }
 	return sourcify(group, !noEscape);
 };
 
@@ -34,20 +34,20 @@ function sourcify (group :Group, needEscape :boolean) :string {
 	var noEmptyBranch :boolean = true;
 	for ( var character in group ) {
 		if ( character ) {
-			var sub_branches :string = sourcify(group[character], needEscape);
-			if ( needEscape && NEED_TO_ESCAPE_IN_REGEXP.test(character) ) { character = '\\'+character; }
-			sub_branches ? branches.push(character+sub_branches) : singleCharactersBranch.push(character);
+			var sub_branches :string = sourcify(group[character]!, needEscape);
+			if ( needEscape && NEED_TO_ESCAPE_IN_REGEXP.test(character) ) { character = '\\' + character; }
+			sub_branches ? branches.push(character + sub_branches) : singleCharactersBranch.push(character);
 		}
 		else { noEmptyBranch = false; }
 	}
-	singleCharactersBranch.length && branches.unshift(singleCharactersBranch.length===1 ? singleCharactersBranch[0] : '['+singleCharactersBranch.join('')+']');
+	singleCharactersBranch.length && branches.unshift(singleCharactersBranch.length===1 ? singleCharactersBranch[0]! : '[' + singleCharactersBranch.join('') + ']');
 	return branches.length===0
 		? ''
 		: ( branches.length===1 && ( singleCharactersBranch.length || noEmptyBranch )
 			? branches[0]
-			: '(?:'+branches.join('|')+')'
+			: '(?:' + branches.join('|') + ')'
 		)
-		+( noEmptyBranch ? '' : '?' );
+		+ ( noEmptyBranch ? '' : '?' );
 }
 
 type Group = { [character :string] :Group };
