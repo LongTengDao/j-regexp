@@ -49,10 +49,10 @@ function RE (this :Context, template :TemplateStringsArray) {
 	var test = re.test = Test(re);
 	var exec = re.exec = Exec(re);
 	test.source = exec.source = source;
-	test.unicode = exec.unicode = U;
-	test.ignoreCase = exec.ignoreCase = I;
-	test.multiline = exec.multiline = includes(source, '^') || includes(source, '$') ? M : null;
-	test.dotAll = exec.dotAll = includes(source, '.') ? S : null;
+	test.unicode = exec.unicode = !U;
+	test.ignoreCase = exec.ignoreCase = !I;
+	test.multiline = exec.multiline = includes(source, '^') || includes(source, '$') ? !M : null;
+	test.dotAll = exec.dotAll = includes(source, '.') ? !S : null;
 	return re;
 }
 

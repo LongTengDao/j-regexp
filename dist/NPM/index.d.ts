@@ -1,7 +1,7 @@
 export = exports;
 declare namespace exports {
 	
-	export const version :'8.0.0';
+	export const version :'8.0.1';
 	
 	export const newRegExp :NewRegExp & {
 		readonly [Flags in `${'g' | ''}${'i' | ''}${'m' | ''}${'s' | ''}${'u' | ''}${'y' | ''}`] :NewRegExp

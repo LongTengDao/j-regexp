@@ -1,13 +1,25 @@
 {
 	"compilerOptions": {
-		"target": "ES3",
-		"baseUrl": "../../..",
+		"target": "ES3"
+		,
+		"baseUrl": "../../.."
+		,
 		"paths": {
 			"@ltd/*": [ "LongTengDao/*/src/export.d" ]
-		},
-		"strict": true,
-		"noImplicitReturns": true,
-		"noUnusedLocals": true,
+		}
+		,
+		"strict": true
+		,
+		"noImplicitReturns": true
+		,
+		"noUnusedLocals": true
+		,
 		"noUncheckedIndexedAccess": true
+		,
+		"noImplicitOverride": true
+		,
+		"isolatedModules": true
+		,
+		"exactOptionalPropertyTypes": true
 	}
 }

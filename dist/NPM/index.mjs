@@ -1,4 +1,4 @@
-﻿var version = '8.0.0';
+﻿var version = '8.0.1';
 
 var bind = Function.prototype.bind;
 
@@ -41,7 +41,7 @@ var RegExp$1 = RegExp;
 
 var freeze = Object.freeze;
 
-var undefined$1 = void 0;
+var undefined$1 = void null;
 
 var apply = typeof Reflect==='undefined' ? undefined$1 : Reflect.apply;
 
@@ -88,10 +88,10 @@ function RE (               template                      ) {
 	var test = re.test = Test(re);
 	var exec = re.exec = Exec(re);
 	test.source = exec.source = source;
-	test.unicode = exec.unicode = U;
-	test.ignoreCase = exec.ignoreCase = I;
-	test.multiline = exec.multiline = includes(source, '^') || includes(source, '$') ? M : null;
-	test.dotAll = exec.dotAll = includes(source, '.') ? S : null;
+	test.unicode = exec.unicode = !U;
+	test.ignoreCase = exec.ignoreCase = !I;
+	test.multiline = exec.multiline = includes(source, '^') || includes(source, '$') ? !M : null;
+	test.dotAll = exec.dotAll = includes(source, '.') ? !S : null;
 	return re;
 }
 
@@ -259,9 +259,11 @@ function sourcify (group       , needEscape         )         {
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
-var hasOwn = hasOwnProperty.bind
-	? /*#__PURE__*/hasOwnProperty.call.bind(hasOwnProperty)
-	: function (object, key) { return /*#__PURE__*/hasOwnProperty.call(object, key); };// && object!=null
+var hasOwn = /*#__PURE__*/function () {
+	return hasOwnProperty.bind
+		? hasOwnProperty.call.bind(hasOwnProperty)
+		: function (object, key) { return hasOwnProperty.call(object, key); };
+}();// && object!=null
 
 var toStringTag = typeof Symbol==='undefined' ? undefined$1 : Symbol.toStringTag;
 
@@ -276,35 +278,33 @@ var defineProperty = (
 var Default = (
 	/*! j-globals: default (internal) */
 	function Default (exports, addOnOrigin) {
-		return /*#__PURE__*/ function Module (exports, addOnOrigin) {
-			if ( !addOnOrigin ) { addOnOrigin = exports; exports = create(NULL); }
-			if ( assign ) { assign(exports, addOnOrigin); }
-			else {
-				for ( var key in addOnOrigin ) { if ( hasOwn(addOnOrigin, key) ) { exports[key] = addOnOrigin[key]; } }
-				for ( key in { 'toString': null } ) { if ( key==='toString' ) { break; } }
-				if ( key!=='toString' ) {
-					var keys = [ 'constructor', 'propertyIsEnumerable', 'isPrototypeOf', 'hasOwnProperty', 'valueOf', 'toLocaleString', 'toString' ];
-					var index = 7;
-					while ( index-- ) { if ( hasOwn(addOnOrigin, key = keys[index]) ) { exports[key] = addOnOrigin[key]; } }
-				}
+		if ( !addOnOrigin ) { addOnOrigin = exports; exports = create(NULL); }
+		if ( assign ) { assign(exports, addOnOrigin); }
+		else {
+			for ( var key in addOnOrigin ) { if ( hasOwn(addOnOrigin, key) ) { exports[key] = addOnOrigin[key]; } }
+			for ( key in { 'toString': null } ) { if ( key==='toString' ) { break; } }
+			if ( key!=='toString' ) {
+				var keys = [ 'constructor', 'propertyIsEnumerable', 'isPrototypeOf', 'hasOwnProperty', 'valueOf', 'toLocaleString', 'toString' ];
+				var index = 7;
+				while ( index-- ) { if ( hasOwn(addOnOrigin, key = keys[index]) ) { exports[key] = addOnOrigin[key]; } }
 			}
-			exports['default'] = exports;
-			if ( freeze ) {
-				if ( toStringTag ) {
-					var descriptor = create(NULL);
-					descriptor.value = 'Module';
-					defineProperty(exports, toStringTag, descriptor);
-				}
-				typeof exports==='function' && exports.prototype && freeze(exports.prototype);
-				freeze(exports);
+		}
+		exports['default'] = exports;
+		if ( freeze ) {
+			if ( toStringTag ) {
+				var descriptor = create(NULL);
+				descriptor.value = 'Module';
+				defineProperty(exports, toStringTag, descriptor);
 			}
-			return exports;
-		}(exports, addOnOrigin);
+			typeof exports==='function' && exports.prototype && freeze(exports.prototype);
+			freeze(exports);
+		}
+		return exports;
 	}
 	/*¡ j-globals: default (internal) */
 );
 
-var _export = Default({
+var _export = /*#__PURE__*/Default({
 	version: version,
 	newRegExp: newRegExp,
 	theRegExp: theRegExp,

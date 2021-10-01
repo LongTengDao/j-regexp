@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = require('@ltd/j-dev')(__dirname+'/..')(async ({ import_default }) => {
+module.exports = require('j-dev')(__dirname+'/..')(async ({ import_default }) => {
 	
 	const { groupify } = await import_default('src/default', { ES: 3 });
 	
