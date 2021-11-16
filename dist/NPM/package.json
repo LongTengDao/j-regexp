@@ -1,7 +1,7 @@
 {
 	"name": "@ltd/j-regexp",
 	"description": "More readable way for creating RegExp. Belong to \"Plan J\".／可读性更好的正则表达式创建方式。从属于“简计划”。",
-	"version": "8.0.1",
+	"version": "8.1.0",
 	"license": "LGPL-3.0",
 	"author": "龙腾道 <LongTengDao@LongTengDao.com> (www.LongTengDao.com)",
 	"bugs": "https://GitHub.com/LongTengDao/j-regexp/issues",
@@ -10,7 +10,13 @@
 		"url": "https://GitHub.com/LongTengDao/j-regexp.git"
 	},
 	"exports": {
-		"import": "./index.mjs",
-		"require": "./index.js"
+		"import": {
+			"types": "./index.d.mts",
+			"default": "./index.mjs"
+		},
+		"require": {
+			"types": "./index.d.ts",
+			"default": "./index.js"
+		}
 	}
 }

@@ -2,10 +2,10 @@ export as namespace jRegExp;
 export = exports;
 declare namespace exports {
 	
-	export const version :'8.0.1';
+	export const version :'8.1.0';
 	
 	export const newRegExp :NewRegExp & {
-		readonly [Flags in `${'g' | ''}${'i' | ''}${'m' | ''}${'s' | ''}${'u' | ''}${'y' | ''}`] :NewRegExp
+		readonly [Flags in `${'d' | ''}${'g' | ''}${'i' | ''}${'m' | ''}${'s' | ''}${'u' | ''}${'y' | ''}`] :NewRegExp
 	};
 	
 	export function theRegExp<Indexes extends number = 0> (re :RegExp) :BoundIndexesRegExp<Indexes>;
@@ -31,7 +31,9 @@ declare namespace exports {
 		};
 		exec :{
 			source :string;
-			<Indexes extends number = 0> (this :void, string :string) :null | BoundRegExpExecArray & {        [Index in T | Indexes] :string   };
+			<Indexes extends number = 0> (this :void, string :string) :null | BoundRegExpExecArray
+				&             {        [Index in T | Indexes] :string               }
+				& { indices? :{        [Index in T | Indexes] :[ number, number ]   } };
 		};
 	}
 	interface BoundNamesRegExp<T extends string> extends RegExp {
@@ -41,9 +43,13 @@ declare namespace exports {
 		};
 		exec :{
 			source :string;
-			<Names   extends string    > (this :void, string :string) :null | BoundRegExpExecArray & { groups :{ [Name in T | Names] :string } };
+			<Names   extends string    > (this :void, string :string) :null | BoundRegExpExecArray
+				&             { groups :{ [Name in T | Names] :string             } }
+				& { indices? :{ groups :{ [Name in T | Names] :[ number, number ] } } };
 		};
 	}
-	type BoundRegExpExecArray = RegExpExecArray & { groups? :{ [Names in string]? :string } } & { [Index in number]? :string } & { 0 :string };
+	type BoundRegExpExecArray = RegExpExecArray
+		&             { groups :undefined | { [Name in string]? :string             } } & { [Index in number]? :string             } & { 0 :string             }
+		& { indices? :{ groups :undefined | { [Name in string]? :[ number, number ] } } & { [Index in number]? :[ number, number ] } & { 0 :[ number, number ] } };
 	
 }

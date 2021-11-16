@@ -36,6 +36,9 @@ declare module '.Object.create?=' { export default create;
 }
 declare module '.Object.defineProperty?' { export default Object.defineProperty; }
 declare module '.Object.freeze?' { export default Object.freeze; }
+declare module '.Object.hasOwn?=' { export default hasOwn;
+	function hasOwn<Key extends string | symbol> (object :{}, key :Key) :object is { readonly [K in Key] :unknown };
+}
 declare module '.Object.prototype' { export default Object.prototype; }
 declare module '.Object.prototype.hasOwnProperty' { export default Object.prototype.hasOwnProperty; }
 declare module '.Object.prototype.propertyIsEnumerable' { export default Object.prototype.propertyIsEnumerable; }

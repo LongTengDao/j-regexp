@@ -1,6 +1,10 @@
-﻿'use strict';
+﻿(function (global, factory) {
+typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+typeof define === 'function' && define.amd ? define(factory) :
+(global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.jRegExp = factory());
+})(this, (function () { 'use strict';
 
-var version = '8.0.1';
+var version = '8.1.0';
 
 var bind = Function.prototype.bind;
 
@@ -124,16 +128,31 @@ var newRegExp = Proxy$1
 	: /*#__PURE__*/function () {
 		RE.apply = RE.apply;
 		var newRegExp = function () { return RE.apply(CONTEXT, arguments       ); }       ;
-		for ( var flags = 63; flags--; ) {
+		var d = 1;
+		var g = d*2;
+		var i = g*2;
+		var m = i*2;
+		var s = i*2;
+		var u = s*2;
+		var y = u*2;
+		var flags = y*2 - 1;
+		while ( flags-- ) {
 			( function (context) {
 				newRegExp[context.flags] = function () { return RE.apply(context, arguments       ); };
 			} )(Context(
-				( flags & 32 ? '' : 'g' ) +
-				( flags & 16 ? '' : 'i' ) +
-				( flags &  8 ? '' : 'm' ) +
-				( flags &  4 ? '' : 's' ) +
-				( flags &  2 ? '' : 'u' ) +
-				( flags &  1 ? '' : 'y' )
+				( flags & d ? '' : 'd' )
+				+
+				( flags & g ? '' : 'g' )
+				+
+				( flags & i ? '' : 'i' )
+				+
+				( flags & m ? '' : 'm' )
+				+
+				( flags & s ? '' : 's' )
+				+
+				( flags & u ? '' : 'u' )
+				+
+				( flags & y ? '' : 'y' )
 			));
 		}
 		return freeze ? freeze(newRegExp) : newRegExp;
@@ -155,7 +174,7 @@ var clearRegExp = '$_' in RegExp$1
 var Object$1 = Object;
 
 var create = Object$1.create || (
-	/*! j-globals: Object.create (polyfill) */
+	/* j-globals: Object.create (polyfill) */
 	/*#__PURE__*/ function () {
 		var NULL;
 		if ( document.domain ) {
@@ -200,15 +219,15 @@ var create = Object$1.create || (
 			return /*#__PURE__*/ __PURE__(o, properties);
 		};
 	}()
-	/*¡ j-globals: Object.create (polyfill) */
+	/* j-globals: Object.create (polyfill) */
 );
 
 var NULL = (
-	/*! j-globals: null.prototype (internal) */
+	/* j-globals: null.prototype (internal) */
 	Object.seal
 		? /*#__PURE__*/Object.preventExtensions(Object.create(null))
 		: null
-	/*¡ j-globals: null.prototype (internal) */
+	/* j-globals: null.prototype (internal) */
 );
 
 var NEED_TO_ESCAPE_IN_REGEXP = /^[$()*+\-.?[\\\]^{|]/;
@@ -261,24 +280,28 @@ function sourcify (group       , needEscape         )         {
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
-var hasOwn = /*#__PURE__*/function () {
-	return hasOwnProperty.bind
-		? hasOwnProperty.call.bind(hasOwnProperty)
-		: function (object, key) { return hasOwnProperty.call(object, key); };
-}();// && object!=null
+var hasOwn = (
+	/* j-globals: Object.hasOwn (polyfill) */
+	Object.hasOwn || /*#__PURE__*/function () {
+		return hasOwnProperty.bind
+			? hasOwnProperty.call.bind(hasOwnProperty)
+			: function hasOwn (object, key) { return hasOwnProperty.call(object, key); };
+	}()
+	/* j-globals: Object.hasOwn (polyfill) */
+);
 
 var toStringTag = typeof Symbol==='undefined' ? undefined$1 : Symbol.toStringTag;
 
 var assign = Object.assign;
 
 var defineProperty = (
-	/*! j-globals: Object.defineProperty (fallback) */
+	/* j-globals: Object.defineProperty (fallback) */
 	Object.seal && Object.defineProperty
-	/*¡ j-globals: Object.defineProperty (fallback) */
+	/* j-globals: Object.defineProperty (fallback) */
 );
 
 var Default = (
-	/*! j-globals: default (internal) */
+	/* j-globals: default (internal) */
 	function Default (exports, addOnOrigin) {
 		if ( !addOnOrigin ) { addOnOrigin = exports; exports = create(NULL); }
 		if ( assign ) { assign(exports, addOnOrigin); }
@@ -303,7 +326,7 @@ var Default = (
 		}
 		return exports;
 	}
-	/*¡ j-globals: default (internal) */
+	/* j-globals: default (internal) */
 );
 
 var _export = /*#__PURE__*/Default({
@@ -314,6 +337,8 @@ var _export = /*#__PURE__*/Default({
 	groupify: groupify
 });
 
-module.exports = _export;
+return _export;
+
+}));
 
 //# sourceMappingURL=index.js.map

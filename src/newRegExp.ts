@@ -83,16 +83,31 @@ export default Proxy
 	: /*#__PURE__*/function () {
 		RE.apply = RE.apply;
 		var newRegExp = function () { return RE.apply(CONTEXT, arguments as any); } as any;
-		for ( var flags = 63; flags--; ) {
+		var d = 1;
+		var g = d*2;
+		var i = g*2;
+		var m = i*2;
+		var s = i*2;
+		var u = s*2;
+		var y = u*2;
+		var flags = y*2 - 1;
+		while ( flags-- ) {
 			( function (context) {
 				newRegExp[context.flags] = function () { return RE.apply(context, arguments as any); };
 			} )(Context(
-				( flags & 32 ? '' : 'g' ) +
-				( flags & 16 ? '' : 'i' ) +
-				( flags &  8 ? '' : 'm' ) +
-				( flags &  4 ? '' : 's' ) +
-				( flags &  2 ? '' : 'u' ) +
-				( flags &  1 ? '' : 'y' )
+				( flags & d ? '' : 'd' )
+				+
+				( flags & g ? '' : 'g' )
+				+
+				( flags & i ? '' : 'i' )
+				+
+				( flags & m ? '' : 'm' )
+				+
+				( flags & s ? '' : 's' )
+				+
+				( flags & u ? '' : 'u' )
+				+
+				( flags & y ? '' : 'y' )
 			));
 		}
 		return freeze ? freeze(newRegExp) : newRegExp;
